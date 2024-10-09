@@ -3,9 +3,6 @@
 https://github.com/user-attachments/assets/29cad2e4-44fa-4404-9182-2c25a040bb8d
 
 
-Berikut adalah contoh README untuk proyek STM32 dengan FreeRTOS, sensor, dan tampilan data menggunakan PuTTY:
-
----
 
 # Praktikum STM32 dengan FreeRTOS dan Tampilan Data di PuTTY
 
