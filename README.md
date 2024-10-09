@@ -3,83 +3,51 @@
 https://github.com/user-attachments/assets/29cad2e4-44fa-4404-9182-2c25a040bb8d
 
 
-## Sistem Berbasis STM32 dengan FreeRTOS, ADC, Tampilan OLED, dan Komunikasi UART
+Berikut adalah contoh README untuk proyek STM32 dengan FreeRTOS, sensor, dan tampilan data menggunakan PuTTY:
 
-Proyek ini mengimplementasikan sistem menggunakan mikrokontroler STM32 dengan FreeRTOS untuk menangani berbagai tugas dan mengelola periferal seperti ADC (Analog-to-Digital Converter), tampilan OLED, dan komunikasi UART.
+---
 
-## Daftar Isi
-- [Pendahuluan](#pendahuluan)
-- [Fitur](#fitur)
-- [Persyaratan Sistem](#persyaratan-sistem)
-- [Struktur Proyek](#struktur-proyek)
-- [Instalasi dan Pengaturan](#instalasi-dan-pengaturan)
-- [Penggunaan](#penggunaan)
-- [Lisensi](#lisensi)
+# Praktikum STM32 dengan FreeRTOS dan Tampilan Data di PuTTY
 
-## Pendahuluan
-Proyek ini menunjukkan penggunaan FreeRTOS pada mikrokontroler STM32 untuk mengelola multitasking dan mengontrol berbagai komponen perangkat keras. Sistem ini dirancang untuk:
-- Memantau dan memproses data sensor menggunakan ADC.
-- Menampilkan informasi pada layar OLED.
-- Berkomunikasi dengan terminal menggunakan UART.
-- Mengelola input pengguna melalui interaksi tombol.
+Praktikum ini mengimplementasikan sebuah sistem berbasis STM32 yang menggunakan FreeRTOS untuk multitasking, memantau sensor menggunakan ADC (Analog-to-Digital Converter), serta berkomunikasi dengan pengguna melalui antarmuka serial menggunakan UART dan PuTTY.
 
-## Fitur
-- **Multitasking dengan FreeRTOS**: Menangani beberapa tugas seperti membaca sensor, memperbarui tampilan, dan mengelola input pengguna secara efisien.
-- **ADC (Analog-to-Digital Converter)**: Membaca data analog dari sensor.
-- **Tampilan OLED**: Menampilkan pesan dan nilai sensor menggunakan driver SSD1306.
-- **Komunikasi UART**: Berinteraksi dengan terminal untuk menampilkan menu dan data sensor.
-- **Penanganan Input Tombol**: Mendeteksi penekanan tombol dan menerapkan logika debounce.
+## Fitur Utama
+- **Multitasking dengan FreeRTOS**: Sistem operasi real-time yang memungkinkan beberapa task berjalan secara paralel.
+- **Sensor Monitoring**: Pembacaan data sensor menggunakan ADC yang dikonversi dan ditampilkan secara real-time.
+- **Antarmuka Pengguna via UART**: Menu interaktif ditampilkan di terminal PuTTY, memungkinkan pengguna untuk memilih dan memantau tegangan sensor.
+- **Debouncing Tombol**: Implementasi debouncing untuk memastikan tombol tidak terbaca lebih dari sekali saat ditekan.
 
-## Persyaratan Sistem
-- Papan mikrokontroler STM32 (misalnya, seri STM32F4 atau STM32F7)
-- Layar OLED dengan driver SSD1306
-- FreeRTOS terintegrasi dengan lingkungan pengembangan STM32
-- Periferal I2C, ADC, dan UART dikonfigurasi pada STM32
-- STM32CubeIDE atau IDE lain yang kompatibel
+## Perangkat Keras yang Digunakan
+- STM32 Microcontroller
+- Sensor analog yang terhubung ke ADC
+- Komunikasi serial UART untuk antarmuka dengan PuTTY
+- Tombol tekan untuk kontrol input pengguna
+
+## Prasyarat
+- **STM32CubeMX**: Untuk konfigurasi dan inisialisasi perangkat keras.
+- **Keil uVision atau IDE STM32 lainnya**: Untuk pengembangan dan kompilasi kode.
+- **PuTTY atau terminal serial lainnya**: Untuk komunikasi serial melalui UART.
+
+## Instalasi
+1. **Konfigurasi Hardware**: Hubungkan sensor ke port ADC pada STM32 dan siapkan tombol sebagai input.
+2. **Setup UART**: Hubungkan STM32 ke komputer melalui port serial untuk berkomunikasi dengan PuTTY.
+3. **Konfigurasi FreeRTOS**: Sesuaikan pengaturan task dan prioritas sesuai kebutuhan Anda.
+
+## Cara Menggunakan
+1. **Inisialisasi Sistem**: Setelah sistem menyala, program akan memulai task FreeRTOS dan menampilkan menu awal di PuTTY.
+2. **Navigasi Menu di PuTTY**:
+   - Pilih opsi yang tersedia untuk memantau data sensor atau menampilkan kembali menu.
+3. **Pemantauan Sensor**: Data sensor akan diperbarui secara real-time dan ditampilkan melalui terminal PuTTY.
+
+## Task Utama dalam FreeRTOS
+- `defaultTask`: Menjalankan tugas dasar sistem.
+- `pickButtonTask`: Memantau status tombol dan melakukan aksi sesuai input.
+- `getADCTask`: Membaca data dari sensor menggunakan ADC.
+- `dispUARTTask`: Menampilkan data sensor ke terminal PuTTY melalui UART.
 
 ## Struktur Proyek
-```
-/STM32-FreeRTOS-System
-    ├── Core/
-    │   ├── Src/
-    │   │   ├── main.c          # Logika utama program
-    │   │   ├── tasks.c         # Implementasi tugas-tugas FreeRTOS
-    │   └── Inc/
-    │       ├── main.h          # File header untuk program utama
-    ├── Drivers/
-    │   ├── SSD1306/            # Driver tampilan OLED
-    │   ├── HAL_Driver/         # Driver HAL STM32
-    └── FreeRTOSConfig/         # File konfigurasi untuk FreeRTOS
-```
+- `main.c`: Berisi logika utama dan pengaturan task FreeRTOS.
+- `adc.c`: Konfigurasi untuk pembacaan data dari sensor.
+- `uart.c`: Menangani komunikasi serial dengan PuTTY.
+- `freertos.c`: Pengaturan task dan manajemen multitasking.
 
-## Instalasi dan Pengaturan
-1. **Kloning Repository**:
-   ```bash
-   git clone https://github.com/nama-pengguna/STM32-FreeRTOS-System.git
-   ```
-
-2. **Buka Proyek di STM32CubeIDE**:
-   - Impor proyek ke dalam STM32CubeIDE.
-   - Pastikan middleware FreeRTOS dan driver HAL yang diperlukan sudah terinstal.
-
-3. **Konfigurasi Periferal**:
-   - Atur I2C untuk komunikasi dengan tampilan OLED.
-   - Konfigurasikan UART untuk komunikasi terminal.
-   - Inisialisasi ADC untuk pembacaan data sensor.
-   - Pastikan pin GPIO untuk tombol dikonfigurasi dengan benar.
-
-4. **Bangun dan Unggah**:
-   - Kompilasi proyek.
-   - Unggah biner yang sudah dikompilasi ke papan mikrokontroler STM32 Anda.
-
-## Penggunaan
-- **Tampilan Informasi**: OLED akan menampilkan pesan awal ("HELLO WORLD :)") dan nilai sensor.
-- **Interaksi Tombol**: Tekan tombol untuk memicu fungsi yang berbeda dalam sistem.
-- **Menu UART**: Gunakan terminal untuk berinteraksi dengan sistem dan melihat data sensor.
-
-### Detail Tugas
-- `defaultTask`: Menginisialisasi dan mengelola sistem.
-- `pickButtonTask`: Memantau status tombol dan mengatasi debounce.
-- `getADCTask`: Membaca dan memproses data sensor.
-- `dispOLEDTask`: Memperbarui informasi pada tampilan OLED.
-- `dispUARTTask`: Mengelola komunikasi dengan terminal UART.
